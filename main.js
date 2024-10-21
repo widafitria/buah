@@ -42,3 +42,21 @@ export async function tambahBuah(nama, warna, harga) {
   console.log("gagal menyimpan data buah")
   }
 }
+
+export async function ambilDaftarBuah() {
+  const refDokumen = collection(basisdata, "buah");
+  const kueri = query(refDokumen, orderBy("nama"));
+  const cuplikankueri = await getDocs(kueri);
+
+  let hasilkueri = [];
+  cuplikankueri.forEach((dokumen) => {
+    hasilkueri.push({
+      id: dokumen.id,
+      nama: dokumen.data().nama,
+      warna: dokumen.data().warna,
+      harga: dokumen.data().harga
+    })
+  })
+
+  return hasilkueri;
+}
